@@ -30,7 +30,7 @@ fetchImageForm.addEventListener('submit', event => {
   gallery.innerHTML = '';
   const pixabayApiKey = '42400311-c577e995298d386a6e7116ddb';
   const query = userInput.value.trim();
-  
+
   //Make a request to the API
   fetch(
     `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(
@@ -50,7 +50,7 @@ fetchImageForm.addEventListener('submit', event => {
           backgroundColor: '#EF4040',
           message:
             'Sorry, there are no images matching your search query. Please try again!',
-          position: 'center',
+          position: 'topRight',
         });
       } else {
         const markup = data.hits
