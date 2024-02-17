@@ -23,6 +23,16 @@ const hidingLoader = () => {
   }
 };
 
+const options = {
+    captions: true,
+    captionSelector: 'img',
+    captionType: 'attr',
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    animation: 250,
+  };
+const lightbox = new SimpleLightbox('.gallery a', options);
+
 fetchImageForm.addEventListener('submit', event => {
   showLoader();
   event.preventDefault(); 
@@ -32,14 +42,15 @@ fetchImageForm.addEventListener('submit', event => {
   const query = userInput.value.trim();
   if(!query){
     iziToast.error({
-        title: '',
         backgroundColor: '#EF4040',
         message:
-          'Sorry, there are no images matching your search query. Please try again!',
+          'Please. enter a search query!',
         position: 'topRight',
       });
+      hidingLoader();
     return;
   }
+
   //Make a request to the API
   fetch(
     `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(
@@ -80,8 +91,6 @@ fetchImageForm.addEventListener('submit', event => {
           })
           .join('');
       gallery.insertAdjacentHTML('afterbegin', markup);
-      const lightbox = new SimpleLightbox('.gallery a', options);
-      lightbox.on('show.simplelightbox');
       lightbox.refresh();
       fetchPicturesForm.reset();
       }
@@ -94,11 +103,3 @@ fetchImageForm.addEventListener('submit', event => {
     });
 });
 
-const options = {
-  captions: true,
-  captionSelector: 'img',
-  captionType: 'attr',
-  captionsData: 'alt',
-  captionPosition: 'bottom',
-  animation: 250,
-};
